@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Balloon Pop 🎈</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: #633d52;
+      background: linear-gradient(145deg, #fff7fb, #ffe6f0);
+    }
+
+    .game {
+      width: min(100%, 620px);
+      padding: 28px;
+      text-align: center;
+      background: #fff;
+      border: 1px solid #f8dce8;
+      border-radius: 26px;
+      box-shadow: 0 18px 50px #7b3f5d18;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      color: #d94378;
+      font-family: Georgia, serif;
+    }
+
+    .instructions { color: #806b78; }
+
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin: 18px 0;
+      font-weight: 700;
+    }
+
+    .stats span { color: #d94378; }
+
+    #gameArea {
+      height: 340px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #f6dbe6;
+      border-radius: 20px;
+      background: radial-gradient(ellipse at 50% 100%, #ffe2ee, #fffafd 72%);
+    }
+
+    .balloon {
+      position: absolute;
+      bottom: -80px;
+      width: 58px;
+      height: 72px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      font-size: 48px;
+      line-height: 1;
+      cursor: pointer;
+      filter: drop-shadow(0 6px 5px #9c56742a);
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    button.control {
+      padding: 11px 20px;
+      border: 0;
+      border-radius: 999px;
+      color: white;
+      background: linear-gradient(100deg, #f36f99, #b17aca);
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button.control.secondary {
+      color: #d94378;
+      background: #fff1f6;
+      border: 1px solid #f5cbdc;
+    }
+
+    button:focus-visible {
+      outline: 3px solid #d95d8c;
+      outline-offset: 3px;
+    }
+
+    #message {
+      min-height: 24px;
+      margin: 14px 0 0;
+      color: #d94378;
+      font-weight: 700;
+    }
+
+    @media (max-width: 480px) {
+      .game { padding: 20px 14px; }
+      #gameArea { height: 300px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="game">
+    <h1>Balloon Pop 🎈</h1>
+    <p class="instructions">Pop the balloons before they float away. You have 3 lives!</p>
+
+    <div class="stats">
+      <div>Score: <span id="score">0</span></div>
+      <div>Lives: <span id="lives">3</span></div>
+    </div>
+
+    <div id="gameArea" aria-label="Balloon game area"></div>
+
+    <div class="controls">
+      <button class="control" id="startButton" type="button">Start game</button>
+      <button class="control secondary" id="stopButton" type="button">Stop</button>
+    </div>
+
+    <p id="message" aria-live="polite">Press Start game when you’re ready!</p>
+  </main>
+
+  <script>
+    const gameArea = document.getElementById("gameArea");
+    const scoreText = document.getElementById("score");
+    const livesText = document.getElementById("lives");
+    const message = document.getElementById("message");
+    const startButton = document.getElementById("startButton");
+
+    let score = 0;
+    let lives = 3;
+    let running = false;
+    let spawnTimer = null;
+
+    function makeBalloon() {
+      if (!running) return;
+
+      const balloon = document.createElement("button");
+      balloon.type = "button";
+      balloon.className = "balloon";
+      balloon.textContent = "🎈";
+      balloon.setAttribute("aria-label", "Pop balloon");
+
+      const maxLeft = Math.max(0, gameArea.clientWidth - 58);
+      balloon.style.left = Math.random() * maxLeft + "px";
+
+      const colors = [
+        "hue-rotate(0deg)",
+        "hue-rotate(35deg)",
+        "hue-rotate(300deg)",
+        "hue-rotate(210deg)"
+      ];
+      balloon.style.filter =
+        colors[Math.floor(Math.random() * colors.length)] +
+        " drop-shadow(0 6px 5px #9c56742a)";
+
+      gameArea.appendChild(balloon);
+
+      const rise = balloon.animate(
+        [
+          { transform: "translateY(0)" },
+          { transform: `translateY(-${gameArea.clientHeight + 150}px)` }
+        ],
+        {
+          duration: 3200 + Math.random() * 2200,
+          easing: "linear"
+        }
+      );
+
+      rise.onfinish = () => {
+        if (!running || !balloon.isConnected) return;
+        balloon.remove();
+        loseLife();
+      };
+
+      balloon.addEventListener("click", () => {
+        if (!running || !balloon.isConnected) return;
+
+        rise.cancel();
+        score++;
+        scoreText.textContent = score;
+        balloon.disabled = true;
+        message.textContent = "Nice pop! Keep going! ✨";
+
+        const pop = balloon.animate(
+          [
+            { transform: "scale(1)", opacity: 1 },
+            { transform: "scale(.2)", opacity: 0 }
+          ],
+          { duration: 180, easing: "ease-out" }
+        );
+
+        pop.onfinish = () => balloon.remove();
+      }, { once: true });
+    }
+
+    function loseLife() {
+      if (!running) return;
+
+      lives--;
+      livesText.textContent = lives;
+
+      if (lives <= 0) {
+        endGame(`Game over! Your score was ${score}. 🎉`);
+      } else {
+        message.textContent = "A balloon escaped! Watch out! 💨";
+      }
+    }
+
+    function startGame() {
+      stopGame(false);
+
+      score = 0;
+      lives = 3;
+      running = true;
+
+      scoreText.textContent = score;
+      livesText.textContent = lives;
+      message.textContent = "Pop as many as you can! 💖";
+      startButton.textContent = "Restart game";
+
+      makeBalloon();
+      spawnTimer = setInterval(makeBalloon, 850);
+    }
+
+    function endGame(finalMessage) {
+      running = false;
+      clearInterval(spawnTimer);
+      spawnTimer = null;
+      gameArea.replaceChildren();
+      message.textContent = finalMessage;
+    }
+
+    function stopGame(showMessage = true) {
+      running = false;
+      clearInterval(spawnTimer);
+      spawnTimer = null;
+      gameArea.replaceChildren();
+
+      if (showMessage) {
+        message.textContent = "Game stopped. Press Start game to play again.";
+      }
+    }
+
+    startButton.addEventListener("click", startGame);
+    document.getElementById("stopButton").addEventListener("click", () => stopGame());
+  </script>
+</body>
+</html>
