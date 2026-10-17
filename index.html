@@ -1,262 +1,281 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Balloon Pop 🎈</title>
-  <style>
-    * { box-sizing: border-box; }
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy Birthday 🎂</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Pirata+One&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff8f0;--fg:#49333b;--cd:#fff;--pk:#d9708d;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;background:radial-gradient(ellipse at 10% 10%,#ffe5e8,transparent 35%),radial-gradient(ellipse at 90% 90%,#f5e4d0,transparent 35%) fixed,var(--bg);color:var(--fg);font:16px/1.5 system-ui,sans-serif;text-align:center;overflow-x:hidden}
+h1,h2{font-family:Pacifico,cursive;color:var(--pk);font-weight:400}
+section{display:none;padding:16px;max-width:520px;margin:auto}section.on{display:block}
+button{font:inherit;background:var(--pk);color:#fff;border:0;border-radius:99px;padding:8px 16px;margin:4px;cursor:pointer}
+.card{background:var(--cd);border-radius:18px;padding:14px;margin:22px 0;box-shadow:0 4px 14px #0002;position:relative}
+#R{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:5}
+#R i{position:absolute;top:-40px;font-style:normal;animation:f linear forwards}
+@keyframes f{to{transform:translateY(110vh) rotate(360deg)}}
+#mu{position:fixed;right:10px;top:calc(env(safe-area-inset-top,0px) + 8px);z-index:60;padding:6px 10px}
+.w{border:3px dashed var(--pk);padding:26px 16px;user-select:none;min-height:90px}
+.w::before,.w::after{position:absolute;font-size:26px}
+.w::before{content:'🌸🌷';top:-18px;left:6px}.w::after{content:'🌼🌺';bottom:-18px;right:6px}
+.w .t{display:none}.w.open .t{display:block;animation:pop .6s}.w.open .hint,.w.open .h{display:none}
+.h{position:absolute;font-size:14px;font-style:normal;cursor:pointer}
+@keyframes pop{from{transform:scale(.6);opacity:0}}
+#qo button{display:block;width:100%;margin:8px 0;background:var(--cd);color:var(--fg);border:2px solid var(--pk)}
+.ov{position:fixed;inset:0;display:none;align-items:center;justify-content:center;flex-direction:column;z-index:80;padding:20px}.ov.on{display:flex}
+#pop{background:#0008}#pop div{background:var(--cd);padding:22px;border-radius:18px;max-width:340px}
+#bk{background:#000;z-index:90}
+#bk h1{font:22vw/1 'Pirata One','UnifrakturCook',Georgia,serif;font-size:min(22vw,120px);color:#b00000;text-shadow:0 6px 0 #600,0 12px 8px #900,0 22px 14px #300;margin:0 0 30px}
+.bl{position:absolute;bottom:-40px;font-size:38px;font-style:normal;animation:up 4s linear;cursor:pointer}
+@keyframes up{to{transform:translateY(-270px)}}
+#bb{position:relative;height:220px;overflow:hidden;background:#ffd6e8;border-radius:12px}
+canvas{background:#fff;border-radius:12px;max-width:100%;touch-action:none}
+#mg{display:grid;grid-template-columns:repeat(4,64px);justify-content:center;gap:6px}
+.mc{width:64px;height:64px;font-size:28px;padding:0;border-radius:12px}
+.note{background:#fff59d;color:#5a3d00;padding:14px;margin:14px auto;max-width:300px;transform:rotate(-2deg);box-shadow:3px 3px 8px #0003}.note:nth-child(even){transform:rotate(2deg);background:#ffc2e0}
+.cake-part{padding:40px 16px;color:#49333b;background:linear-gradient(145deg,#fff0e8,#f7dfe5);border-radius:24px;margin:30px 0}
+.cake-part h2{font:600 clamp(2rem,6vw,3rem) Georgia,serif;margin:10px 0;color:#49333b}
+.cake-script{color:#a7375d;font-style:italic}
+.cake-stage{position:relative;min-height:510px;margin:24px auto 0;padding:30px 16px;overflow:hidden;border-radius:28px;background:#fffaf5;box-shadow:0 18px 55px #753b4a20}
+.cake-ingredients{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin:24px auto}
+.cake-ingredient{padding:12px 16px;border:1px solid #f0d4ce;border-radius:14px;background:#fff;color:#49333b;cursor:pointer}
+.cake-ingredient.added{background:#e8f0df;opacity:.7}
+.cake-button{padding:13px 20px;border:0;border-radius:99px;background:#a7375d;color:#fff;font-weight:bold;cursor:pointer}
+.cake-button:disabled{opacity:.45;cursor:not-allowed}
+.cake-hidden{display:none!important}
+.birthday-cake{display:none;position:relative;width:min(290px,80vw);height:200px;margin:75px auto 35px}
+.cake-top{position:absolute;bottom:88px;left:11%;width:78%;height:60px;border-radius:16px 16px 10px 10px;background:#ffd7c7}
+.cake-layer{position:absolute;bottom:0;width:100%;height:100px;border-radius:18px 18px 14px 14px;background:#ec8ea0;box-shadow:inset 0 -12px #db7288}
+.cake-layer::after{content:"♥  •  ♥  •  ♥";position:absolute;top:40px;left:0;width:100%;color:#fff;font-size:20px}
+.cake-icing{position:absolute;bottom:80px;width:100%;height:35px;border-radius:12px 12px 20px 20px;background:#fff3e7}
+.cake-candle{position:absolute;z-index:2;bottom:145px;left:calc(50% - 4px);width:9px;height:44px;border-radius:5px;background:repeating-linear-gradient(45deg,#fff 0 6px,#df7890 6px 11px)}
+.cake-flame{position:absolute;top:-24px;left:-6px;color:#ffb842;font-size:24px;animation:cake-flicker .3s infinite alternate}
+@keyframes cake-flicker{to{transform:scale(.78) rotate(8deg)}}
+.cake-stage.baked .birthday-cake{display:block}
+.cake-cheer{display:none;perspective:400px}
+.cake-stage.finished .cake-cheer{display:block}
+.cake-stage.finished .cake-flame{display:none}
+.ch{display:inline-block;font-size:48px;margin:0 4px;animation:cl .5s infinite alternate}
+@keyframes cl{from{transform:rotateY(-35deg)}to{transform:rotateY(35deg) translateY(-10px) scale(1.12)}}
+.curtains{display:none;position:fixed;z-index:10;inset:0;pointer-events:none}
+.curtains.show{display:block}
+.curtains::before,.curtains::after{content:"";position:absolute;top:0;bottom:0;width:51%;background:repeating-linear-gradient(90deg,#74122d 0 24px,#a92144 24px 55px,#8b1534 55px 78px);box-shadow:inset 0 0 35px #36081766;transition:transform 2.5s cubic-bezier(.7,0,.2,1)}
+.curtains::before{left:0;transform:translateX(-100%)}
+.curtains::after{right:0;transform:translateX(100%)}
+.curtains.close::before,.curtains.close::after{transform:translateX(0)}
+.final-message{position:fixed;z-index:11;inset:0;display:grid;place-content:center;padding:24px;text-align:center;color:#fff;background:#1d061055;opacity:0;visibility:hidden;pointer-events:none;transition:opacity 1s ease}
+.final-message.visible{opacity:1;visibility:visible}
+.final-message h2{max-width:900px;margin:12px 0;color:#ffced5;font:italic 600 clamp(2.5rem,7vw,4.8rem) Georgia,serif}
+.final-message p{color:#fff;font-size:1.1rem}
+@media(prefers-reduced-motion:reduce){.curtains::before,.curtains::after,.final-message{transition-duration:.01ms!important}}
+.eyebrow{color:#c0577a;font-size:.75rem;font-weight:bold;letter-spacing:.18em;text-transform:uppercase}
+.script{color:#c0577a;font-style:italic}
+#s1 h1{font:600 clamp(2rem,7vw,3rem) Georgia,serif;color:var(--fg);line-height:1.1}
+.stage{padding:10px;border:8px solid #fff;border-radius:28px;background:linear-gradient(160deg,#fae4dd,#f5cbd2 65%,#e9b9bd);box-shadow:0 18px 55px #753b4a18}
+.dw{position:relative;max-width:340px;margin:auto;border-radius:18px;overflow:hidden;line-height:0}
+.dw img{width:100%;display:block}
+#mk{position:absolute;inset:0;width:100%;height:100%;mix-blend-mode:multiply;touch-action:none;cursor:crosshair;background:none;border-radius:0}
+.zn{position:absolute;border:2px dashed #c0577a;border-radius:50%;pointer-events:none;animation:pl .9s infinite alternate}
+@keyframes pl{to{background:#ffffff80}}
+.makeup-tools{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:14px 0}.tool{background:#fff;color:var(--fg);border:1px solid #f0d7d8;border-radius:14px}.tool[data-t="eraser"]{background:#f2e8fa;border:2px solid #a981ba;color:var(--fg);font-weight:700;min-width:120px}
+.tool.selected{border-color:#d9708d;background:#fff0f2}.tool.done{background:#f0f2e7;border-color:#b6c39d}
+.sw{width:30px;height:30px;padding:0;border:3px solid #fff;border-radius:50%;box-shadow:0 0 0 1px #e4c6cb}.sw.sel{box-shadow:0 0 0 2px var(--fg)}
+.progress{height:9px;border-radius:99px;background:#f2dfe1;overflow:hidden;margin:16px 0 8px}
+#pf{width:0;height:100%;background:linear-gradient(90deg,#f1a1b3,#d9708d);transition:width .35s}
+button:disabled{opacity:.45;cursor:not-allowed}
+</style></head><body>
+<div id="R"></div><button id="mu">🔊</button>
 
-    body {
-      min-height: 100vh;
-      margin: 0;
-      display: grid;
-      place-items: center;
-      padding: 20px;
-      font-family: "Segoe UI", Arial, sans-serif;
-      color: #633d52;
-      background: linear-gradient(145deg, #fff7fb, #ffe6f0);
-    }
+<section id="s1" class="on">
+<div class="eyebrow">A tiny birthday quest ✨</div>
+<h1>You have to do makeup of this doll <span class="script">to unlock your birthday page</span></h1>
+<p>Take your time—there is no timer. Pick a brush, then paint right on her face. Drag with your finger or mouse!</p>
+<div class="stage"><div class="dw"><img id="cat" src="angella.jpg" alt="Doll"><canvas id="mk" width="402" height="497"></canvas></div></div>
+<div class="makeup-tools"><button class="tool" data-t="blush">🌸 Blush brush</button><button class="tool" data-t="shadow">✨ Eyeshadow brush</button><button class="tool" data-t="lipstick">💄 Lipstick</button><button class="tool" data-t="mascara">🖌️ Mascara wand</button><button class="tool" data-t="glitter">⭐ Bow glitter</button><button class="tool" data-t="eraser">🧽 Eraser</button></div>
+<div class="colors">Colour: <button class="sw sel" data-c="#e0607e" style="background:#e0607e" aria-label="Rose"></button><button class="sw" data-c="#b57edc" style="background:#b57edc" aria-label="Lilac"></button><button class="sw" data-c="#b0305a" style="background:#b0305a" aria-label="Berry"></button><button class="sw" data-c="#e0a030" style="background:#e0a030" aria-label="Golden"></button></div>
+<p id="hn">Choose any brush and paint anywhere on the doll. Nothing completes automatically.</p>
+<button id="ub">I’m done — open my birthday page ✨</button>
+</section>
 
-    .game {
-      width: min(100%, 620px);
-      padding: 28px;
-      text-align: center;
-      background: #fff;
-      border: 1px solid #f8dce8;
-      border-radius: 26px;
-      box-shadow: 0 18px 50px #7b3f5d18;
-    }
+<section id="s2">
+<h1>Happy Birthday, <span class="nm"></span>! 🎂</h1>
+<p>Open each wish. Every one has a little trick 💝</p>
+<div class="card w" data-k="3"><div class="hint">🔒 Tap me 3 times</div><div class="t">Today the world got its brightest star. You make every ordinary day feel like a celebration, and I’m so lucky I get to celebrate you. 🌟</div></div>
+<div class="card w" data-k="2"><div class="hint">🔒 Double tap me</div><div class="t">May your year be full of laughter, good food, soft mornings and all the things your heart has been quietly wishing for. 🍰</div></div>
+<div class="card w" data-k="l"><div class="hint">🔒 Press &amp; hold me</div><div class="t">You are kind, funny, beautiful and strong. Never forget how much you are loved, today and every day after. 💖</div></div>
+<div class="card w" data-k="h"><div class="hint">🔒 Find the tiny 💗 hiding in this card</div><i class="h">💗</i><div class="t">My only wish: that every dream of yours comes true, and that I get to be there for all of them. Happy birthday, my love! 🥳</div></div>
+<button id="nx" hidden>Next: a little quiz 💌</button>
+</section>
 
-    h1 {
-      margin: 0 0 8px;
-      color: #d94378;
-      font-family: Georgia, serif;
-    }
+<section id="s3">
+<h2>Love Quiz 💘</h2>
+<div>Wrong: <span id="wr"></span></div><p id="qn"></p>
+<div class="card"><h3 id="qq"></h3><div id="qo"></div></div>
+</section>
 
-    .instructions { color: #806b78; }
+<section id="s4">
+<h2>Game Zone 🎮</h2>
+<div class="card"><h3>🎈 Balloon Pop</h3><div id="bb"></div><button id="bst">Start</button>Score: <b id="bsc">0</b></div>
+<div class="card"><h3>🎨 Drawing</h3><canvas id="dc" width="300" height="180"></canvas><br><input id="col" type="color" value="#ff5c9d"><button id="clr">Clear</button></div>
+<div class="card"><h3>🃏 Memory Cards</h3><div id="mg"></div></div>
+<div class="card"><h3>🐍 Snake</h3><canvas id="sc" width="240" height="240"></canvas><br><button onclick="dir(0,-1)">⬆️</button><br><button onclick="dir(-1,0)">⬅️</button><button onclick="dir(0,1)">⬇️</button><button onclick="dir(1,0)">➡️</button></div>
+<div class="card"><h3>🪢 Jump Rope</h3><p>Tap the box to jump over the rope!</p><canvas id="rc" width="240" height="170"></canvas><img id="jumpModel" src="miku.jpg" alt="Miku jumping" hidden></div>
+<h2>Notes for You 💌</h2>
+<div class="card" id="nl"><p>🔒 Your notes are locked. Draw a <b>strawberry</b> 🍓 (a big red fruit with green leaves on top) to open them.</p>
+<canvas id="fc" width="300" height="240"></canvas>
+<div id="fs"><button class="sw sel" data-c="#e63946" style="background:#e63946" aria-label="Red"></button><button class="sw" data-c="#2e9e4f" style="background:#2e9e4f" aria-label="Green"></button><button class="sw" data-c="#4a3228" style="background:#4a3228" aria-label="Brown"></button><button id="fclr">Clear</button><button id="fchk">Unlock ✨</button></div>
+<p id="fm"></p></div>
+<div id="nt" hidden>
+<div class="note">You’re my favourite notification. 💗</div>
+<div class="note">Every day with you feels like a birthday.</div>
+<div class="note">Never stop smiling, it’s my favourite view. — Saad</div>
+</div>
+<div class="cake-part">
+<p>THE BIRTHDAY FINALE</p>
+<h2>Let’s make your <span class="cake-script">birthday cake!</span></h2>
+<div class="cake-stage" id="cakeStage">
+<div id="cakeIngredientsStep">
+<h3>First, gather your ingredients 🥣</h3>
+<p>Tap each ingredient to add it to the birthday bowl.</p>
+<div class="cake-ingredients" id="cakeIngredients"></div>
+<p id="cakeIngredientStatus">0 of 5 ingredients added</p>
+<button class="cake-button" id="bakeCakeButton" disabled>Bake the cake ✨</button>
+</div>
+<div class="birthday-cake" id="birthdayCake" aria-label="Birthday cake">
+<div class="cake-candle"><span class="cake-flame">🔥</span></div>
+<div class="cake-top"></div><div class="cake-icing"></div><div class="cake-layer"></div>
+</div>
+<div id="cakeCandleStep" class="cake-hidden">
+<h3>Make a wish, then blow out your candle! 🕯️</h3>
+<button class="cake-button" id="blowCakeCandle">Blow the candle 💨</button>
+</div>
+<div class="cake-cheer"><span class="ch">🐻👏</span><span class="ch">🐰👏</span><span class="ch">🐼👏</span><span class="ch">🦄👏</span></div>
+</div>
+<div class="curtains" id="curtains"></div>
+<div class="final-message" id="finalMessage"><div>
+<div style="font-size:64px">🎂 ✨ 🌹</div>
+<h2>Thanks for making my life beautiful</h2>
+<p>May all your birthday wishes come true. 💖</p>
+</div></div>
+</div>
+</section>
 
-    .stats {
-      display: flex;
-      justify-content: center;
-      gap: 24px;
-      margin: 18px 0;
-      font-weight: 700;
-    }
+<div id="pop" class="ov"><div><h3>📸 Oops!</h3><p>Send a cute pic to Saad first on WhatsApp so you can reset your false count</p><button id="dn">Done</button></div></div>
+<div id="bk" class="ov"><h1>You liar</h1><button id="sr">Sorry, I sent it bby, love u 💕</button></div>
 
-    .stats span { color: #d94378; }
-
-    #gameArea {
-      height: 340px;
-      position: relative;
-      overflow: hidden;
-      border: 1px solid #f6dbe6;
-      border-radius: 20px;
-      background: radial-gradient(ellipse at 50% 100%, #ffe2ee, #fffafd 72%);
-    }
-
-    .balloon {
-      position: absolute;
-      bottom: -80px;
-      width: 58px;
-      height: 72px;
-      padding: 0;
-      border: 0;
-      background: transparent;
-      font-size: 48px;
-      line-height: 1;
-      cursor: pointer;
-      filter: drop-shadow(0 6px 5px #9c56742a);
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .controls {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 18px;
-    }
-
-    button.control {
-      padding: 11px 20px;
-      border: 0;
-      border-radius: 999px;
-      color: white;
-      background: linear-gradient(100deg, #f36f99, #b17aca);
-      font: inherit;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    button.control.secondary {
-      color: #d94378;
-      background: #fff1f6;
-      border: 1px solid #f5cbdc;
-    }
-
-    button:focus-visible {
-      outline: 3px solid #d95d8c;
-      outline-offset: 3px;
-    }
-
-    #message {
-      min-height: 24px;
-      margin: 14px 0 0;
-      color: #d94378;
-      font-weight: 700;
-    }
-
-    @media (max-width: 480px) {
-      .game { padding: 20px 14px; }
-      #gameArea { height: 300px; }
-    }
-  </style>
-</head>
-<body>
-  <main class="game">
-    <h1>Balloon Pop 🎈</h1>
-    <p class="instructions">Pop the balloons before they float away. You have 3 lives!</p>
-
-    <div class="stats">
-      <div>Score: <span id="score">0</span></div>
-      <div>Lives: <span id="lives">3</span></div>
-    </div>
-
-    <div id="gameArea" aria-label="Balloon game area"></div>
-
-    <div class="controls">
-      <button class="control" id="startButton" type="button">Start game</button>
-      <button class="control secondary" id="stopButton" type="button">Stop</button>
-    </div>
-
-    <p id="message" aria-live="polite">Press Start game when you’re ready!</p>
-  </main>
-
-  <script>
-    const gameArea = document.getElementById("gameArea");
-    const scoreText = document.getElementById("score");
-    const livesText = document.getElementById("lives");
-    const message = document.getElementById("message");
-    const startButton = document.getElementById("startButton");
-
-    let score = 0;
-    let lives = 3;
-    let running = false;
-    let spawnTimer = null;
-
-    function makeBalloon() {
-      if (!running) return;
-
-      const balloon = document.createElement("button");
-      balloon.type = "button";
-      balloon.className = "balloon";
-      balloon.textContent = "🎈";
-      balloon.setAttribute("aria-label", "Pop balloon");
-
-      const maxLeft = Math.max(0, gameArea.clientWidth - 58);
-      balloon.style.left = Math.random() * maxLeft + "px";
-
-      const colors = [
-        "hue-rotate(0deg)",
-        "hue-rotate(35deg)",
-        "hue-rotate(300deg)",
-        "hue-rotate(210deg)"
-      ];
-      balloon.style.filter =
-        colors[Math.floor(Math.random() * colors.length)] +
-        " drop-shadow(0 6px 5px #9c56742a)";
-
-      gameArea.appendChild(balloon);
-
-      const rise = balloon.animate(
-        [
-          { transform: "translateY(0)" },
-          { transform: `translateY(-${gameArea.clientHeight + 150}px)` }
-        ],
-        {
-          duration: 3200 + Math.random() * 2200,
-          easing: "linear"
-        }
-      );
-
-      rise.onfinish = () => {
-        if (!running || !balloon.isConnected) return;
-        balloon.remove();
-        loseLife();
-      };
-
-      balloon.addEventListener("click", () => {
-        if (!running || !balloon.isConnected) return;
-
-        rise.cancel();
-        score++;
-        scoreText.textContent = score;
-        balloon.disabled = true;
-        message.textContent = "Nice pop! Keep going! ✨";
-
-        const pop = balloon.animate(
-          [
-            { transform: "scale(1)", opacity: 1 },
-            { transform: "scale(.2)", opacity: 0 }
-          ],
-          { duration: 180, easing: "ease-out" }
-        );
-
-        pop.onfinish = () => balloon.remove();
-      }, { once: true });
-    }
-
-    function loseLife() {
-      if (!running) return;
-
-      lives--;
-      livesText.textContent = lives;
-
-      if (lives <= 0) {
-        endGame(`Game over! Your score was ${score}. 🎉`);
-      } else {
-        message.textContent = "A balloon escaped! Watch out! 💨";
-      }
-    }
-
-    function startGame() {
-      stopGame(false);
-
-      score = 0;
-      lives = 3;
-      running = true;
-
-      scoreText.textContent = score;
-      livesText.textContent = lives;
-      message.textContent = "Pop as many as you can! 💖";
-      startButton.textContent = "Restart game";
-
-      makeBalloon();
-      spawnTimer = setInterval(makeBalloon, 850);
-    }
-
-    function endGame(finalMessage) {
-      running = false;
-      clearInterval(spawnTimer);
-      spawnTimer = null;
-      gameArea.replaceChildren();
-      message.textContent = finalMessage;
-    }
-
-    function stopGame(showMessage = true) {
-      running = false;
-      clearInterval(spawnTimer);
-      spawnTimer = null;
-      gameArea.replaceChildren();
-
-      if (showMessage) {
-        message.textContent = "Game stopped. Press Start game to play again.";
-      }
-    }
-
-    startButton.addEventListener("click", startGame);
-    document.getElementById("stopButton").addEventListener("click", () => stopGame());
-  </script>
-</body>
-</html>
+<script>
+const NAME='Birthday Girl',$=id=>document.getElementById(id);
+document.querySelectorAll('.nm').forEach(e=>e.textContent=NAME);
+// edit questions here: [question, [4 options], index of correct option]
+const Q=[["Who is my favourite person in the world?",["Nobody","You","The cat","Myself"],1],
+["Your smile is like…?",["Sunshine","Monday","Homework","Rain"],0],
+["How often do I think of you?",["Once a day","Ten times","A hundred times","Countless times"],3],
+["Who is the princess here?",["The doll","The cake","You","Saad"],2],
+["Best birthday gift?",["Socks","Saad’s love","Sleep","Homework"],1],
+["What do you deserve today?",["Chores","Nothing","Everything","Exams"],2],
+["What do I love most about you?",["Your socks","Your kindness","Your Wi-Fi password","Your alarm clock"],1],
+["Who will always support you?",["Saad","Saad","Saad","Saad (obviously)"],3],
+["What is your superpower?",["Making me smile","Invisibility","Flying","Cooking"],0],
+["Will you forgive me for this silly quiz?",["Yes","Of course","Absolutely","All of them"],3]];
+function go(n){document.querySelectorAll('section').forEach(s=>s.classList.toggle('on',s.id=='s'+n));scrollTo(0,0);rain(n==2);if(n==3)showQ()}
+// emoji rain
+const E=['🎉','🎊','🎈','🎂','🍰','🧁','🥳','🎁','💖','🌸','🎀'];let rt;
+function rain(on){clearInterval(rt);if(on)rt=setInterval(()=>{const e=document.createElement('i');e.textContent=E[Math.random()*E.length|0];e.style.cssText=`left:${Math.random()*95}vw;animation-duration:${3+Math.random()*3}s;font-size:${18+Math.random()*22}px`;$('R').append(e);setTimeout(()=>e.remove(),6500)},220)}
+// music (synthesised birthday tune, no mp3 needed)
+let ac,mg,mt=0;function song(){if(ac)return;ac=new(window.AudioContext||window.webkitAudioContext)();mg=ac.createGain();mg.connect(ac.destination);
+const N=[392,392,440,392,523,494,392,392,440,392,587,523,392,392,784,659,523,494,440,698,698,659,523,587,523],D=[.5,.5,1,1,1,2,.5,.5,1,1,1,2,.5,.5,1,1,1,1,1,.5,.5,1,1,1,2];
+(function p(){let t=ac.currentTime+.1;N.forEach((f,i)=>{const o=ac.createOscillator(),g=ac.createGain(),d=D[i]*.4;o.type='triangle';o.frequency.value=f;g.gain.setValueAtTime(.2,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g);g.connect(mg);o.start(t);o.stop(t+d+.05);t+=d});setTimeout(p,(t-ac.currentTime+2)*1000)})()}
+document.addEventListener('pointerdown',song,{once:true});
+$('mu').onclick=()=>{mt^=1;if(mg)mg.gain.value=mt?0:1;$('mu').textContent=mt?'🔇':'🔊'};
+// 1 makeup: free painting, no timer, no automatic step completion
+const W=402,H=497,mk=$('mk'),cx=mk.getContext('2d'),T={
+blush:{r:20,a:.16,soft:1},
+shadow:{r:13,a:.22,soft:1},
+lipstick:{r:5,a:.9},
+mascara:{r:2.5,a:.95,c:'#2b1d26'},
+glitter:{r:3,g:1}};
+let tool=null,col='#e0607e',dr=0,last;
+const rgba=(h,a)=>{const n=parseInt(h.slice(1),16);return`rgba(${n>>16},${n>>8&255},${n&255},${a})`};
+const TBs=[...document.querySelectorAll('.tool')];
+TBs.forEach(b=>{b.onclick=()=>{tool=b.dataset.t;TBs.forEach(x=>x.classList.toggle('selected',x===b));$('hn').textContent=tool==='eraser'?'Eraser selected — drag over any makeup to remove it. 🧽':'Brush selected — paint anywhere on the doll. Take your time! ✨'}});
+document.querySelectorAll('.colors .sw').forEach(b=>b.onclick=()=>{col=b.dataset.c;document.querySelectorAll('.colors .sw').forEach(x=>x.classList.toggle('sel',x===b))});
+function stamp(x,y){const t=T[tool];cx.save();
+if(t.g){for(let i=0;i<3;i++){cx.fillStyle=Math.random()<.5?'#f6c945':col;cx.beginPath();cx.arc(x+(Math.random()-.5)*16,y+(Math.random()-.5)*16,1+Math.random()*2,0,Math.PI*2);cx.fill()}}
+else if(t.soft){const g=cx.createRadialGradient(x,y,0,x,y,t.r);g.addColorStop(0,rgba(col,t.a));g.addColorStop(1,rgba(col,0));cx.fillStyle=g;cx.beginPath();cx.arc(x,y,t.r,0,Math.PI*2);cx.fill()}
+else{cx.globalAlpha=t.a;cx.fillStyle=t.c||col;cx.beginPath();cx.arc(x,y,t.r,0,Math.PI*2);cx.fill()}
+cx.restore()}
+function eraseAt(x,y){cx.save();cx.globalCompositeOperation='destination-out';cx.beginPath();cx.arc(x,y,18,0,Math.PI*2);cx.fill();cx.restore()}
+function paint(x,y){if(tool==='eraser')eraseAt(x,y);else stamp(x,y)}
+const pt=e=>{const r=mk.getBoundingClientRect();return[(e.clientX-r.left)*W/r.width,(e.clientY-r.top)*H/r.height]};
+mk.onpointerdown=e=>{if(!tool){$('hn').textContent='Choose a brush or the eraser first 👆';return}dr=1;mk.setPointerCapture(e.pointerId);last=pt(e);paint(...last)};
+mk.onpointermove=e=>{if(!dr||!tool)return;const p=pt(e),spacing=tool==='eraser'?8:Math.max(2,T[tool].r*.4),n=Math.max(1,Math.ceil(Math.hypot(p[0]-last[0],p[1]-last[1])/spacing));for(let i=1;i<=n;i++)paint(last[0]+(p[0]-last[0])*i/n,last[1]+(p[1]-last[1])*i/n);last=p};
+mk.onpointerup=mk.onpointercancel=()=>dr=0;
+$('ub').onclick=()=>go(2);
+// 2 wishes
+let opened=0;document.querySelectorAll('.w').forEach(w=>{const k=w.dataset.k;let n=0,tm;const op=()=>{w.classList.add('open');if(++opened==4)$('nx').hidden=0};
+if(k=='h'){const e=w.querySelector('.h');e.style.left=Math.random()*85+'%';e.style.top=30+Math.random()*60+'%';e.onclick=op}
+else if(k=='l'){w.onpointerdown=()=>tm=setTimeout(op,1200);w.onpointerup=w.onpointerleave=()=>clearTimeout(tm)}
+else w.onclick=()=>{clearTimeout(tm);if(++n>=+k)return op();tm=setTimeout(()=>n=0,600)}});
+$('nx').onclick=()=>go(3);
+// 3 quiz
+let qi=0,wr=0;const lives=()=>$('wr').textContent='💔'.repeat(wr)+'🤍'.repeat(3-wr);
+function showQ(){const[q,o]=Q[qi];$('qn').textContent=`Question ${qi+1} of 10`;$('qq').textContent=q;$('qo').innerHTML='';o.forEach((t,i)=>{const b=document.createElement('button');b.textContent=t;b.onclick=()=>{if(i==Q[qi][2]){b.style.background='#2ecc71';setTimeout(()=>++qi<10?showQ():go(4),600)}else{b.disabled=1;b.style.opacity=.4;wr++;lives();if(wr>=3)$('pop').classList.add('on')}};$('qo').append(b)});lives()}
+$('dn').onclick=()=>{$('pop').classList.remove('on');$('bk').classList.add('on')};
+$('sr').onclick=()=>{$('bk').classList.remove('on');wr=0;showQ()};
+// 4 games
+let bs=0,bt;$('bst').onclick=()=>{clearInterval(bt);bs=0;$('bsc').textContent=0;bt=setInterval(()=>{const b=document.createElement('i');b.textContent='🎈';b.className='bl';b.style.left=Math.random()*85+'%';b.onclick=()=>{b.textContent='💥';$('bsc').textContent=++bs;setTimeout(()=>b.remove(),200)};$('bb').append(b);setTimeout(()=>b.remove(),4000)},600)};
+(()=>{const c=$('dc'),x=c.getContext('2d');let d=0;x.lineWidth=4;x.lineCap='round';const p=e=>{const r=c.getBoundingClientRect();return[(e.clientX-r.left)*c.width/r.width,(e.clientY-r.top)*c.height/r.height]};
+c.onpointerdown=e=>{d=1;x.strokeStyle=$('col').value;x.beginPath();x.moveTo(...p(e))};c.onpointermove=e=>{if(d){x.lineTo(...p(e));x.stroke()}};c.onpointerup=()=>d=0;$('clr').onclick=()=>x.clearRect(0,0,300,180)})();
+(()=>{const e=['🐻','🦄','🌸','🍰'],a=[...e,...e].sort(()=>Math.random()-.5);let f=[];a.forEach(m=>{const b=document.createElement('button');b.className='mc';b.textContent='❓';b.onclick=()=>{if(f.length>1||b.dataset.o)return;b.textContent=m;b.dataset.o=1;f.push(b);if(f.length==2)setTimeout(()=>{if(f[0].textContent!=f[1].textContent)f.forEach(y=>{y.textContent='❓';delete y.dataset.o});f=[]},700)};$('mg').append(b)})})();
+let dir;(()=>{const x=$('sc').getContext('2d'),N=12,Z=20;let s,d,f;const rs=()=>{s=[[5,5]];d=[1,0];f=[8,8]};rs();
+dir=(a,b)=>{if(a!=-d[0]||b!=-d[1])d=[a,b]};
+addEventListener('keydown',e=>{const m={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0]}[e.key];if(m){e.preventDefault();dir(...m)}});
+setInterval(()=>{const h=[(s[0][0]+d[0]+N)%N,(s[0][1]+d[1]+N)%N];if(s.some(p=>p+''==h+''))rs();else{s.unshift(h);if(h+''==f+'')f=[Math.random()*N|0,Math.random()*N|0];else s.pop()}
+x.fillStyle='#ffe3ef';x.fillRect(0,0,240,240);x.font='18px serif';x.fillText('🍓',f[0]*Z,f[1]*Z+17);x.fillStyle='#e0115f';s.forEach(p=>x.fillRect(p[0]*Z+1,p[1]*Z+1,18,18))},180)})();
+const model=$( 'jumpModel' );
+(()=>{const c=$('rc'),x=c.getContext('2d');let th=0,jy=0,v=0,s=0,hit=0,ok=0;c.onclick=()=>{if(!jy){v=9;jy=1}};
+setInterval(()=>{th+=.1;if(jy){jy+=v;v-=.8;if(jy<=0)jy=v=0}const o=Math.cos(th);
+if(o>.8){if(jy<14){s=0;hit=1;ok=0}else if(!hit)ok=1}else{if(ok)s++;ok=hit=0}
+x.clearRect(0,0,240,170);x.strokeStyle='#e0115f';x.lineWidth=3;x.beginPath();x.moveTo(60,90);x.quadraticCurveTo(120,90+150*o,180,90);x.stroke();
+if(model.complete&&model.naturalWidth){x.imageSmoothingEnabled=true;x.drawImage(model,82,72,302,308,82,52-jy,76,78)}else{x.font='44px serif';x.fillText('👧',98,140-jy)};x.font='16px sans-serif';x.fillStyle='#e0115f';x.fillText('Jumps: '+s,8,20)},25)})();
+// notes lock: draw a strawberry (needs lots of red + some green)
+(()=>{const c=$('fc'),x=c.getContext('2d');let d=0,fc='#e63946';x.lineWidth=12;x.lineCap=x.lineJoin='round';
+const p=e=>{const r=c.getBoundingClientRect();return[(e.clientX-r.left)*c.width/r.width,(e.clientY-r.top)*c.height/r.height]};
+c.onpointerdown=e=>{d=1;c.setPointerCapture(e.pointerId);x.strokeStyle=fc;x.beginPath();x.moveTo(...p(e));x.lineTo(...p(e));x.stroke()};
+c.onpointermove=e=>{if(d){x.lineTo(...p(e));x.stroke()}};c.onpointerup=()=>d=0;
+document.querySelectorAll('#fs .sw').forEach(b=>b.onclick=()=>{fc=b.dataset.c;document.querySelectorAll('#fs .sw').forEach(y=>y.classList.toggle('sel',y==b))});
+$('fclr').onclick=()=>x.clearRect(0,0,c.width,c.height);
+$('fchk').onclick=()=>{const D=x.getImageData(0,0,c.width,c.height).data;let r=0,g=0;for(let i=0;i<D.length;i+=4){if(D[i+3]<128)continue;const R=D[i],G=D[i+1],B=D[i+2];if(R>170&&G<110&&B<120)r++;else if(G>110&&G>R+25&&G>B+25)g++}
+if(r>2500&&g>300){$('nl').hidden=1;$('nt').hidden=0}else $('fm').textContent=r<=2500?'Strawberries are big and red, fill in more red! 🍓':'Almost! Add some green leaves on top 🌿'}})();
+// cake
+const ingredients=["🌾 Flour","🥚 Eggs","🥛 Milk","🍬 Sugar","🧈 Butter"];
+const addedIngredients=new Set();
+const ingredientsContainer=$("cakeIngredients"),ingredientStatus=$("cakeIngredientStatus"),bakeButton=$("bakeCakeButton"),cakeStage=$("cakeStage");
+ingredients.forEach((ingredient,index)=>{
+  const button=document.createElement("button");
+  button.className="cake-ingredient";button.textContent=ingredient;
+  button.addEventListener("click",()=>{
+    button.classList.add("added");button.disabled=true;addedIngredients.add(index);
+    ingredientStatus.textContent=`${addedIngredients.size} of ${ingredients.length} ingredients added`;
+    bakeButton.disabled=addedIngredients.size<ingredients.length;
+  });
+  ingredientsContainer.appendChild(button);
+});
+bakeButton.addEventListener("click",()=>{
+  cakeStage.classList.add("baked");
+  $("cakeIngredientsStep").classList.add("cake-hidden");
+  $("cakeCandleStep").classList.remove("cake-hidden");
+});
+$("blowCakeCandle").addEventListener("click",()=>{
+  cakeStage.classList.add("finished");rain(1);
+  $("cakeCandleStep").innerHTML="<h3>Wish made! 🎂</h3><p>Your birthday crowd is cheering for you!</p>";
+  setTimeout(()=>{rain(0);closeBirthdayCurtains()},7000);
+});
+function closeBirthdayCurtains(){
+  const curtains=$("curtains"),message=$("finalMessage");
+  curtains.classList.add("show");
+  void curtains.offsetWidth; // render the open curtains before the closing animation
+  curtains.classList.add("close");
+  setTimeout(()=>message.classList.add("visible"),2200);
+}
+</script></body></html>
